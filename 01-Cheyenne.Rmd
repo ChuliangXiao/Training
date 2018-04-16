@@ -12,7 +12,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Tentative Schedule
+## Tentative Schedule  {.build}
 * Cheyenne101
 * WRF and WRF-Hydro on Cheyenne
 * Step-by-step on WRF
@@ -33,6 +33,9 @@ knitr::opts_chunk$set(echo = FALSE)
 |Discussion| Stop me anytime |
 
 # Cheyenne 101
+
+## Cheyenne
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ycNQ_wqsWFc" frameborder="0" allowfullscreen></iframe>  
 
 ## Hardware
 | |
