@@ -37,6 +37,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Cheyenne
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ycNQ_wqsWFc" frameborder="0" allowfullscreen></iframe>  
 
+[NCAR Cheyenne Introduction PPT](https://www2.cisl.ucar.edu/sites/default/files/Cheyenne_Briefing_MesaLab_20160624e.pdf)
+
 ## Hardware
 | |
 |-----+---------------|
@@ -48,7 +50,7 @@ knitr::opts_chunk$set(echo = FALSE)
 | 3 times Yellowstone computational capacity |	Comparison based on the relative performance of | the CISL High Performance Computing Benchmarks run on each system. |
 | 3.5 times Yellowstone peak performance |	5.34 peak petaflops (vs. 1.504) |
 
-## logging in  
+## Logging in  
 `ssh -X -l cxiao cheyenne.ucar.edu`  
 or   
 `ssh -X cxiao@cheyenne.ucar.edu`  
@@ -66,7 +68,6 @@ If your PC or Mac has the same user name,
 |**module unload ncl**|Unload the specified software package(s)|
 
 ## Job submission queues and charges  
-
 | Queue name |	Priority order |	Wall clock (hours) |	Description|
 |----+----+----+----|
 | premium	| 1	| 12 | Jobs are charged at **150%** of the regular rate.|
@@ -74,8 +75,17 @@ If your PC or Mac has the same user name,
 | economy	| 3	| 12 |	Production batch jobs charged at **70%** of the regular rate.|
 | share	| NA |	6	| Interactive and serial batch use for debugging and other tasks on a single, shared, 128-GB node. Jobs can use up to 18 cores.|
 
-## GLADE File Spaces 
+## Job submission with PBS  
+![PBS Script Example](PBS_Example.png)  
 
+| |
+|-----+---------------|
+|Submit a job| `qsub myjob_PBS.sh`  |
+|Delete a job| `qdel job_id`  | 
+|Check a job |`qstat -u cxiao`  or ` qstat -u $USER`|
+|Check history|`qhist -u $USER`|
+
+## GLADE File Spaces 
 |File space	|Quota	|Backup	|Purge policy|Description|
 |----+----+----+----+----|
 |Home: /glade/u/home/username	|25 GB*	|Yes	|Not purged	|User home directory|
@@ -112,9 +122,15 @@ Current GLADE space usage: cxiao
 
 ## Using data-access nodes  
 `ssh username@data-access.ucar.edu`  
-* Globus  
-* SCP/SFTP (WinSCP, FileZilla, or PSCP/PSFTP)  
-* BBCP  
+
+* Migrate data from   
+    + HPSS tape archive  
+    + GLADE disk resource  
+    + Research Data Archive (RDA)  
+* Transferring files  
+    + Globus  
+    + SCP/SFTP (**PSCP/PSFTP**, **WinSCP**, or FileZilla)  
+    + BBCP  
 
 ## Software  
 * Applications and analysis packages  
@@ -141,10 +157,29 @@ WPS_GEOG
 * GLADE  /glade2/collections/rda/data/ds608.0/
 * HPSS /FS/DSS/DS608.0/
 
+## Resource
+| |
+|-----+---------------|
+|Cheyenne          | High-performance computing resource|
+|Geyser and Caldera| Analysis and visualization systems|
+|GLADE             | Centralized file systems and data storage|
+|HPSS              | NCAR data archive|
+
 ## Geyser and Caldera  
 | |
 |-----+---------------|
 |Geyser, 16 large-memory nodes |`1 TB DDR3-1600 memory per node (1000 GB usable memory per node)`, `IBM x3850, quad-socket nodes`, `Four 10-core, 2.4-GHz Intel Xeon E7-4870 (Westmere EX) processors per node`, `FDR Mellanox InfiniBand, full fat tree`, `1 NVIDIA GPU per node`|
 |Caldera, 30 nodes, 16 with GPUs |`64 GB DDR3-1600 memory per node \n(62 GB usable memory per node)`, `IBM x360 M4, dual-socket nodes`, `Two 8-core 2.6-GHz Intel Xeon E5-2670 (Sandy Bridge) processors per node with AVX`, `FDR Mellanox InfiniBand, full fat tree`, `2 NVIDIA GPUs per node (16 nodes)`|
+
+## For Cheyenne Projects  
+* **Citation **   
+Computational and Information Systems Laboratory. 2017. Cheyenne: HPE/SGI ICE XA System (University Community Computing). Boulder, CO: National Center for Atmospheric Research. doi: [10.5065/D6RX99HX](https://doi.org/10.5065/D6RX99HX).  
+
+* **Acknowledgments**    
+_We would like to acknowledge high-performance computing support from Cheyenne (doi:10.5065/D6RX99HX) provided by NCAR's Computational and Information Systems Laboratory, sponsored by the National Science Foundation._
+
+
+
+
 
 
