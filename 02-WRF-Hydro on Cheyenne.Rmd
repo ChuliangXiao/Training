@@ -1,0 +1,15 @@
+---
+title: "Hands-on Traning"
+subtitle: '02 - WRF and WRF-Hydro on Cheyenne'
+author: "Chuliang Xiao"
+date: "4/24/2018"
+output: 
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
