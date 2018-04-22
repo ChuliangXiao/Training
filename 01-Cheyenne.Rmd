@@ -76,7 +76,19 @@ If your PC or Mac has the same user name,
 | share	| NA |	6	| Interactive and serial batch use for debugging and other tasks on a single, shared, 128-GB node. Jobs can use up to 18 cores.|
 
 ## Job submission with PBS  
-![PBS Script Example](PBS_Example.png)  
+ 
+```yaml
+#!/bin/bash
+#PBS -N WH_LC
+#PBS -A UMIC0044
+#PBS -l walltime=12:00:00
+#PBS -q economy
+#PBS -l select=3:ncpus=36:mpiprocs=36
+#PBS -j oe
+#export TMPDIR=/glade/scratch/cxiao/temp
+#mkdir -p $TMPDIR
+mpiexec_mpt ./wrf_hydro.exe #>& wrf_hydro.log
+```
 
 | |
 |-----+---------------|
