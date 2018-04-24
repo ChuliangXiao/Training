@@ -1,15 +1,227 @@
 ---
 title: "Hands-on Traning"
-subtitle: '02 - WRF and WRF-Hydro on Cheyenne'
 author: "Chuliang Xiao"
 date: "4/24/2018"
-output: 
+output:
   ioslides_presentation:
-    widescreen: true
+    widescreen: yes
+subtitle: "02 - WRF and WRF-Hydro on Cheyenne"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+# Part I: WRF  
+## WRF Components  
+<div class="columns-2">
+![](http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3.9/users_guide_chap1_files/image001.png)
+
+* As shown in the diagram   
+    + The WRF Preprocessing System (WPS)
+    + _WRF-DA_
+    + **WRF ARW solver**
+    + Post-processing & Visualization tools
+</div>
+
+
+## WRF Conponents: WPS  
+<div class="columns-2">
+* Lake Champlain `namelist.wps`  
+
+<style>
+pre {
+  font-size: 13px;
+  line-height:18px
+}
+</style>
+
+```yaml
+&share
+ wrf_core = 'ARW',
+ max_dom = 1,
+ start_date = '2011-01-01_00:00:00','2014-11-16_00:00:00'
+ end_date   = '2011-01-02_00:00:00','2014-11-17_00:00:00'
+ interval_seconds = 10800
+ io_form_geogrid = 2,
+/
+
+&geogrid
+ parent_id         =   1,   1,  2,
+ parent_grid_ratio =   1,   4,  3,
+ i_parent_start    =   1,  20,  93,
+ j_parent_start    =   1,  15,  41,
+ e_we              =  201, 101, 331,
+ e_sn              =  361, 145, 291,
+ geog_data_res     = 'modis_15s','modis_15s','2m',
+ dx = 1000,
+ dy = 1000,
+ map_proj = 'lambert',
+ ref_lat   = 44.58 ,
+ ref_lon   = -73.2,
+ truelat1  =  30.0,
+ truelat2  =  60.0,
+ stand_lon = -97,
+ geog_data_path = '/glade/u/home/wrfhelp/WPS_GEOG'
+/
+
+&ungrib
+ out_format = 'WPS',
+ prefix = 'FILE',
+/
+
+&metgrid
+ fg_name = 'FILE'
+ io_form_metgrid = 2,
+/
+```
+
+* defining simulation domains  
+* interpolating terrestrial data to the simulation domain  
+* degribbing and interpolating meteorological data  
+
+![](http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3.9/users_guide_chap3.fld/image002.gif)  
+<br><br><br><br><br>  
+
+</div>
+
+## WRF Data Flow  
+<div class="columns-2">
+<div align="center">
+<img src="WRF-WPS-Flow.png" width=500 height=200>
+</div>
+
+* Executables  
+
+* Data Flow  
+ <br>  <br>  <br>
+
+<div align="center">
+<img src="http://slideplayer.com/7498783/24/images/36/Data+Flow+wrfbdy+ungrib+wrf+wrfinput+metgrid+geogrid+real+geo_em.jpg" width=500 height=400>
+</div>
+
+</div>
+
+# Part II: WRF-Hydro  
+## WRF Directory  
+<div class="columns-2">
+```
+├── arch
+├── dyn_em
+├── dyn_exp
+├── dyn_nmm
+├── external
+│   ├── atm_ocn
+│   ├── esmf_time_f90
+│   ├── fftpack
+│   │   └── fftpack5
+│   ├── ioapi_share
+│   ├── io_esmf
+│   ├── io_grib1
+│   │   ├── build
+│   │   ├── grib1_util
+│   │   ├── MEL_grib1
+│   │   └── WGRIB
+│   ├── io_grib2
+│   │   ├── bacio-1.3
+│   │   └── g2lib
+│   │       └── utest
+│   ├── io_grib_share
+│   │   └── build
+│   ├── io_int
+│   ├── io_mcel
+│   ├── io_netcdf
+│   ├── io_phdf5
+│   ├── io_pio
+│   ├── io_pnetcdf
+│   └── RSL_LITE
+├── frame
+```
+<br><br><br><br><br><br>
+```
+├── hydro
+│   ├── arc
+│   ├── CPL
+│   │   └── WRF_cpl
+│   ├── Data_Rec
+│   ├── HYDRO_drv
+│   ├── MPP
+│   ├── Routing
+│   └── Run
+├── inc
+├── main
+├── phys
+├── Registry
+├── run
+├── share
+├── test
+│   ├── em_b_wave
+│   ├── em_convrad
+│   ├── em_esmf_exp
+│   ├── em_fire
+│   │   ├── hill_simple
+│   │   └── two_fires
+│   ├── em_grav2d_x
+│   ├── em_heldsuarez
+│   ├── em_hill2d_x
+│   ├── em_les
+│   ├── em_quarter_ss
+│   ├── em_real
+│   ├── em_scm_xy
+│   ├── em_seabreeze2d_x
+│   ├── em_squall2d_x
+│   ├── em_squall2d_y
+│   ├── em_tropical_cyclone
+│   ├── exp_real
+│   ├── nmm_real
+│   └── nmm_tropical_cyclone
+└── tools
+    ├── CodeBase
+    └── DOMAIN_TIME_TEST
+```
+</div>
+
+## WRF-Hydro Framework  
+<div class="columns-2">
+
+<div align="center">
+<img src="https://ral.ucar.edu/sites/default/files/public/wrf-overview.png" width=500 height=400>
+</div>
+
+<div align="center">
+<img src="WRF-Hydro-Eco.png" width=500 height=400>
+</div>
+
+</div>
+(Courtesy **WRF-Hdyro Training Material**)  
+
+## WRF-Hydro Framework  
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KSAeyVYovOQ?rel=0&amp;start=452" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## WRF-Hydro Dataflow  
+<div align="center">
+<img src="WRF-Hydro-Workflow.png" width=900 height=500>
+</div>
+(Courtesy **WRF-Hdyro Training Material**)  
+
+##  WRF-Hydro training material  
+
+https://ral.ucar.edu/projects/wrf_hydro/training-materials 
+```
+Multi-scale Water Cycle Predictions Using the Community WRF-Hydro Modeling System  
+WRF-Hydro: System Conceptualization  
+Compiling and Executing WRF-Hydro  
+WRF-Hydro & NoahMP LSM Physics Overview  
+WRF-Hydro System: Physics Components  
+Channel Routing & Lakes and Reservoirs in WRF-Hydro  
+WRF-Hydro Forcing & Preprocessing Input Data Requirements  
+Overview of the ArcGIS WRF-Hydro Pre-processing Tool  
+WRF-Hydro: Coupling with WRF  
+The WRF-Hydro Modeling System: Implementation & Calibration Approaches  
+WRF-Hydro Data Assimilation Approaches  
+WRF-Hydro Calibration Approaches  
+WRF-Hydro hydro.namelist files with Description of Options  
+NoahMP namelist.hrldas with a Description of Options  
+```
 
