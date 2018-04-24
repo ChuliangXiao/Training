@@ -13,6 +13,40 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # Part I: WRF  
+## WRF Tutorial  
+* Next WRF Tutorial  
+    + Registration is now open. https://www.mmm.ucar.edu/wrf-tutorial-0  
+        - The next WRF tutorial will be held **July 23-27, 2018 in Boulder, CO**. For this summer session, there will only be a Basic WRF Tutorial, with no additional tutorials the following week.  
+
+* Future WRF Tutorials  
+    + January 2019 and July 2019  
+    
+* WRF-Hydro Training Workshop  
+    + June 5 - 8, 2018, sponsored by [CUAHSI](https://www.cuahsi.org/education/training/training-and-workshops/training-workshop-the-community-wrf-hydro-modeling-system-1)  
+    + **Application deadline has passed.** 
+
+ 
+
+## WRF Overview  
+<div class="columns-2">
+* Weather Research and Forecasting (**WRF**)  
+    + Meteorological studies  
+    + Real-time NWP   
+    + Idealized simulations  
+    + Data assimilation  
+    + Earth system model coupling  
+    + Model training and education 
+    
+\pagebreak     
+    
+* WRF Variants  
+    + **WRF-Hydro**: WRF hydrological modeling system  
+    + **WRFDA**: WRF Data Assimilation System  
+    + **WRF-Chem**: WRF atmospheric chemistry model
+    + **Polar-WRF** ,**HWRF**, **NU-WRF**   
+
+
+</div>
 ## WRF Components  
 <div class="columns-2">
 ![](http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3.9/users_guide_chap1_files/image001.png)
@@ -102,84 +136,23 @@ pre {
 
 </div>
 
+## WRF Resource 
+| |
+|----+----|
+|WRF User’s Guides online/pdf | http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3/contents.html|
+|Semi-annual WRF Tutorial (July and January) | http://www2.mmm.ucar.edu/wrf/users/supports/tutorial.html|
+|Annual WRF Users Workshop | http://www2.mmm.ucar.edu/wrf/users/supports/workshop.html|
+|WRF Forum |http://forum.wrfforum.com/ |
+
+
 # Part II: WRF-Hydro  
 ## WRF Directory  
-<div class="columns-2">
+To show on computer  
+
+```yaml
+cd ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file
+tree
 ```
-├── arch
-├── dyn_em
-├── dyn_exp
-├── dyn_nmm
-├── external
-│   ├── atm_ocn
-│   ├── esmf_time_f90
-│   ├── fftpack
-│   │   └── fftpack5
-│   ├── ioapi_share
-│   ├── io_esmf
-│   ├── io_grib1
-│   │   ├── build
-│   │   ├── grib1_util
-│   │   ├── MEL_grib1
-│   │   └── WGRIB
-│   ├── io_grib2
-│   │   ├── bacio-1.3
-│   │   └── g2lib
-│   │       └── utest
-│   ├── io_grib_share
-│   │   └── build
-│   ├── io_int
-│   ├── io_mcel
-│   ├── io_netcdf
-│   ├── io_phdf5
-│   ├── io_pio
-│   ├── io_pnetcdf
-│   └── RSL_LITE
-├── frame
-```
-<br><br><br><br><br><br>
-```
-├── hydro
-│   ├── arc
-│   ├── CPL
-│   │   └── WRF_cpl
-│   ├── Data_Rec
-│   ├── HYDRO_drv
-│   ├── MPP
-│   ├── Routing
-│   └── Run
-├── inc
-├── main
-├── phys
-├── Registry
-├── run
-├── share
-├── test
-│   ├── em_b_wave
-│   ├── em_convrad
-│   ├── em_esmf_exp
-│   ├── em_fire
-│   │   ├── hill_simple
-│   │   └── two_fires
-│   ├── em_grav2d_x
-│   ├── em_heldsuarez
-│   ├── em_hill2d_x
-│   ├── em_les
-│   ├── em_quarter_ss
-│   ├── em_real
-│   ├── em_scm_xy
-│   ├── em_seabreeze2d_x
-│   ├── em_squall2d_x
-│   ├── em_squall2d_y
-│   ├── em_tropical_cyclone
-│   ├── exp_real
-│   ├── nmm_real
-│   └── nmm_tropical_cyclone
-└── tools
-    ├── CodeBase
-    └── DOMAIN_TIME_TEST
-```
-</div>
 
 ## WRF-Hydro Framework  
 <div class="columns-2">
@@ -204,6 +177,14 @@ pre {
 <img src="WRF-Hydro-Workflow.png" width=900 height=500>
 </div>
 (Courtesy **WRF-Hdyro Training Material**)  
+
+## WRF-Hydro Code Framework  
+To show on computer  
+
+```yaml
+cd /glade/u/home/cxiao/WORK/WRFHydro5.0/wrf_hydro_community_v5.0.0/
+tree
+```
 
 ##  WRF-Hydro training material  
 
