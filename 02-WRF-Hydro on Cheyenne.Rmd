@@ -139,6 +139,7 @@ pre {
 ## WRF Resource 
 | |
 |----+----|
+| WRF Source Code Browser| http://math.ucdenver.edu/~mvejmelka/wrf-browsers/master/ |
 |WRF User’s Guides online/pdf | http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3/contents.html|
 |Semi-annual WRF Tutorial (July and January) | http://www2.mmm.ucar.edu/wrf/users/supports/tutorial.html|
 |Annual WRF Users Workshop | http://www2.mmm.ucar.edu/wrf/users/supports/workshop.html|
