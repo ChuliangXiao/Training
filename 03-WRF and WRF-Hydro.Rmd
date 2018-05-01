@@ -40,7 +40,7 @@ cd WRFTest
 mkdir WPS 
 mkdir WRFV3
 cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WPSV3.7.1_intel_serial_large-file/* WPS/ 
-cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_real/* WRFV3/
+cp ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_real/* WRFV3/
 ```
 ## WPS: `namelist.wps` 
 `cd WPS` 
@@ -65,11 +65,11 @@ cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_re
      + `cp ~cxiao/WORK/Champlain/WPS/runmetgrid.sh .`  
      + `qsub runmetgrid.sh`
      
-## WRF: `namelist.wrf`  
+## WRF: `namelist.input`  
 `cd ../WRFV3` 
 
-* Replace the example with my Lake Champlain `namelist.wrf`  
-    + `cp ~cxiao/WORK/Champlain/WRF/namelist.wrf .`  
+* Replace the example with my Lake Champlain `namelist.input`  
+    + `cp ~cxiao/WORK/Champlain/WRF/namelist.input .`  
 * Job submission scripts   
     + `cp ~cxiao/WORK/Champlain/WRF/runreal.sh .`  
     + `cp ~cxiao/WORK/Champlain/WRF/runwrf.sh .`  
@@ -129,7 +129,7 @@ FORCING/2011010109.LDASIN_DOMAIN1
 
 ## WRF-Hydro configuration  
 * Coarse land component `namelist.hrldas`  
-* Fine routing component `namelist.hrldas` 
+* Fine routing component `hydro.namelist` 
 
 ## Submit job
 
