@@ -80,23 +80,26 @@ cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_re
 
 # Part II: WRF-Hydro  
 ## Define domain  
-
+* WPS `geogrid.exe`  
+    + geo_em.d01.nc
+* WRF `real.exe` 
+    + wrfinput.nc
 
 ## Hydrofabic 
 ```
+* WRF-Hydro ArcGIS Toolbox
+    + https://github.com/NCAR/wrf_hydro_arcgis_preprocessor  
+    
 ├── Fulldom_hires.nc
 ├── GENPARM.TBL
 ├── geo_em.d01.nc
 ├── GEOGRID_LDASOUT_Spatial_Metadata.nc
-├── GWBUCKPARM_LC_20180220.nc
 ├── GWBUCKPARM_LC_20180412.nc
 ├── GWBUCKPARM.TBL
 ├── HYDRO.TBL
 ├── HYDRO_TBL_2D.nc
-├── LAKEPARM_2018_04_12.nc
 ├── LAKEPARM_2018_04_25.nc
 ├── MPTABLE.TBL
-├── RouteLink_LakeChamplain2018_02_20.nc
 ├── RouteLink_LakeChamplain2018_04_12.nc
 ├── SOILPARM.TBL
 ├── soil_properties.nc
@@ -107,9 +110,21 @@ cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_re
 ```
 
 ## Generate Forcing  
-NCL with Earth System Modeling Framework (ESMF) 
+* NLDAS2 (13 km) ----> WRF-Hydro land component (1 km)  
+* NCL with Earth System Modeling Framework (ESMF) `ESMF_regrid`   
+    + https://www.ncl.ucar.edu/Applications/ESMF.shtml  
+
 ```
-ESMF_regrid
+FORCING/2011010100.LDASIN_DOMAIN1
+FORCING/2011010101.LDASIN_DOMAIN1
+FORCING/2011010102.LDASIN_DOMAIN1
+FORCING/2011010103.LDASIN_DOMAIN1
+FORCING/2011010104.LDASIN_DOMAIN1
+FORCING/2011010105.LDASIN_DOMAIN1
+FORCING/2011010106.LDASIN_DOMAIN1
+FORCING/2011010107.LDASIN_DOMAIN1
+FORCING/2011010108.LDASIN_DOMAIN1
+FORCING/2011010109.LDASIN_DOMAIN1
 ```
 
 ## WRF-Hydro configuration  
@@ -118,6 +133,11 @@ ESMF_regrid
 
 ## Submit job
 
+`qsub submit_wrf_hydro.sh`
+
+## Post-processing  
+* `rwrfhydro` (https://github.com/NCAR/rwrfhydro)  
+* `wrf_hydro_py` (https://github.com/NCAR/wrf_hydro_py)    
 
 
 

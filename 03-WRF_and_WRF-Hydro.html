@@ -210,21 +210,34 @@ cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_re
 
 </article></slide><slide class=""><hgroup><h2>Define domain</h2></hgroup><article  id="define-domain">
 
+<ul>
+<li>WPS <code>geogrid.exe</code>
+
+<ul>
+<li>geo_em.d01.nc</li>
+</ul></li>
+<li>WRF <code>real.exe</code>
+
+<ul>
+<li>wrfinput.nc</li>
+</ul></li>
+</ul>
+
 </article></slide><slide class=""><hgroup><h2>Hydrofabic</h2></hgroup><article  id="hydrofabic">
 
-<pre >├── Fulldom_hires.nc
+<pre >* WRF-Hydro ArcGIS Toolbox
+    + https://github.com/NCAR/wrf_hydro_arcgis_preprocessor  
+    
+├── Fulldom_hires.nc
 ├── GENPARM.TBL
 ├── geo_em.d01.nc
 ├── GEOGRID_LDASOUT_Spatial_Metadata.nc
-├── GWBUCKPARM_LC_20180220.nc
 ├── GWBUCKPARM_LC_20180412.nc
 ├── GWBUCKPARM.TBL
 ├── HYDRO.TBL
 ├── HYDRO_TBL_2D.nc
-├── LAKEPARM_2018_04_12.nc
 ├── LAKEPARM_2018_04_25.nc
 ├── MPTABLE.TBL
-├── RouteLink_LakeChamplain2018_02_20.nc
 ├── RouteLink_LakeChamplain2018_04_12.nc
 ├── SOILPARM.TBL
 ├── soil_properties.nc
@@ -235,9 +248,25 @@ cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_re
 
 </article></slide><slide class=""><hgroup><h2>Generate Forcing</h2></hgroup><article  id="generate-forcing">
 
-<p>NCL with Earth System Modeling Framework (ESMF)</p>
+<ul>
+<li>NLDAS2 (13 km) &#8212;-&gt; WRF-Hydro land component (1 km)<br/></li>
+<li>NCL with Earth System Modeling Framework (ESMF) <code>ESMF_regrid</code>
 
-<pre >ESMF_regrid</pre>
+<ul>
+<li><a href='https://www.ncl.ucar.edu/Applications/ESMF.shtml' title=''>https://www.ncl.ucar.edu/Applications/ESMF.shtml</a></li>
+</ul></li>
+</ul>
+
+<pre >FORCING/2011010100.LDASIN_DOMAIN1
+FORCING/2011010101.LDASIN_DOMAIN1
+FORCING/2011010102.LDASIN_DOMAIN1
+FORCING/2011010103.LDASIN_DOMAIN1
+FORCING/2011010104.LDASIN_DOMAIN1
+FORCING/2011010105.LDASIN_DOMAIN1
+FORCING/2011010106.LDASIN_DOMAIN1
+FORCING/2011010107.LDASIN_DOMAIN1
+FORCING/2011010108.LDASIN_DOMAIN1
+FORCING/2011010109.LDASIN_DOMAIN1</pre>
 
 </article></slide><slide class=""><hgroup><h2>WRF-Hydro configuration</h2></hgroup><article  id="wrf-hydro-configuration">
 
@@ -246,7 +275,16 @@ cp -r ~wrfhelp/PRE_COMPILED_CHEYENNE/WRFV3.7.1_intel_dmpar_large-file/test/em_re
 <li>Fine routing component <code>namelist.hrldas</code></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Submit job</h2></hgroup><article  id="submit-job"></article></slide>
+</article></slide><slide class=""><hgroup><h2>Submit job</h2></hgroup><article  id="submit-job">
+
+<p><code>qsub submit_wrf_hydro.sh</code></p>
+
+</article></slide><slide class=""><hgroup><h2>Post-processing</h2></hgroup><article  id="post-processing">
+
+<ul>
+<li><code>rwrfhydro</code> (<a href='https://github.com/NCAR/rwrfhydro' title=''>https://github.com/NCAR/rwrfhydro</a>)<br/></li>
+<li><code>wrf_hydro_py</code> (<a href='https://github.com/NCAR/wrf_hydro_py' title=''>https://github.com/NCAR/wrf_hydro_py</a>)</li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>
