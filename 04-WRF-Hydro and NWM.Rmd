@@ -16,11 +16,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## WRF-Hydro Dataflow  
 <div align="center">
-<img src="WRF-Hydro-Workflow.png" width=900 height=500>
+<img src="WRF-Hydro-Workflow.png" width=800 height=480>
 </div>
 (Courtesy **WRF-Hdyro Training Material**) 
 
-## Define domain  
+## Model domain defined by WRF/WPS   
 ![](WRF-WPS-Flow.png) 
 
 * WPS `geogrid.exe`  
@@ -34,7 +34,6 @@ https://github.com/NCAR/wrf_hydro_arcgis_preprocessor
 <div align="center">
 <img src="ArcToolbox.png" width=900 height=500>
 </div>
-
 
 ## Hydrofabic 
 ```
