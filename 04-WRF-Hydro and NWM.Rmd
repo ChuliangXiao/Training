@@ -80,6 +80,7 @@ cd /glade2/scratch2/cxiao
 mkdir Champlain
 cd  Champlain
 mkdir Run
+cd Run
 cp ~cxiao/wrf_hydro_community_v5.0.0/Run/wrf_hydro_NoahMP.exe wrf_hydro.exe
 cp ~cxiao/wrf_hydro_community_v5.0.0/Run/*TBL .
 ```
@@ -90,7 +91,7 @@ Generate _Hydrofabic_ `DOMAIN` files and meteorological `FORCING`
 Link `DOMAIN` and `FORCING` directories  
 ```yaml
 ln -sf /glade2/scratch2/cxiao/Champlain/Run/DOMAIN DOMAIN
-ln -sf /glade2/scratch2/cxiao/Champlain/Run/DOMAIN FORCING
+ln -sf /glade2/scratch2/cxiao/Champlain/Run/FORCING FORCING
 ```
 ## Try WRF-Hydro 3: WRF-Hydro configuration  
     + Coarse land component `namelist.hrldas`  
