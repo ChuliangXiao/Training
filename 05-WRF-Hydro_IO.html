@@ -44,7 +44,24 @@ class: center, middle, inverse, title-slide
 
 ---
 
-# Meteorological Forcing 1: Datasets  
+# WRF-Hydro Workflow  
+&lt;div align="center"&gt;
+&lt;img src="WRF-Hydro-Workflow-Executable.png" width=800 height=480&gt;
+&lt;/div&gt;
+(Courtesy **WRF-Hdyro Training Material**) 
+
+---
+
+# Configureation  
+* hydro.namelist: WRF-Hydro with Description of Options   
+  [PDF Link](https://ral.ucar.edu/sites/default/files/public/WRF-Hydrohydro.namelistFilewithDescriptionofOptions.pdf)
+  
+  
+* namelist.hrldas: NoahMP with a Description of Options  
+  [PDF Link](https://ral.ucar.edu/sites/default/files/public/NoahMPnamelist.hrldasFilewithDescriptionofOptions.pdf)
+---
+
+# Meteorological Forcing: Datasets  
 
 Abbr.| Name | Link  
 ----|----|----  
@@ -55,6 +72,23 @@ MRMS|Multi Radar Multi Sensor System |[NOAA](http://mrms.ncep.noaa.gov/data/)
 RAP|Rapid Refresh|[NOAA](https://rapidrefresh.noaa.gov/hrrr/)   
 GFS|Global Forecast System|[UCAR](https://rda.ucar.edu/datasets/ds084.6/#!description)   
 
+---
+
+# Meteorological Forcing: Variables 
+* Temperature (deg K)  
+
+* Humidity-mixing ratio (kg/kg)  
+
+* Short &amp; longwave radiation (W/m^2)  
+
+* Pressure (Pa)  
+
+* Wind speed (m/s) (can be u-,v-components, can be magnitude and direction)  
+
+* Precipitation rate (mm/s)  
+
+ALL FORCING DATA IS MAPPED TO SAME GRID (based on WRF ‘geogrid’)  
+SPECIFIED PRECIPITATION MAY HAVE HIGHER TIME RESOLUTION (e.g. 5min)  
 ---
 
 # Meteorological Forcing 1: Regridding
@@ -152,7 +186,7 @@ readNWISuv(siteNumbers = gages[i:j],
 devtools::install_github("NCAR/rwrfhydro")
 ```
 
-|   |
+|  Resource  | Link   |
 |----|----|  
 |Website|https://ral.ucar.edu/projects/wrf_hydro/rwrfhydro | 
 |Document|https://rdrr.io/github/mccreigh/rwrfhydro/ |  
