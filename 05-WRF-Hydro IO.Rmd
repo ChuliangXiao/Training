@@ -17,6 +17,18 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
+#Using git to connect GitHub  
+* To clone  
+```git
+git clone https://github.com/ChuliangXiao/Training.git
+```
+
+* To update 
+```git
+git pull
+```
+---
+
 # Outline
  
 #### Review of WRF-Hydro Workflow 
