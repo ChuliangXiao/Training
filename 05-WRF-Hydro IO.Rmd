@@ -126,7 +126,7 @@ readNWISuv(siteNumbers = gages[i:j],
            parameterCd = parameterCd,
            startDate = startDate,
            endDate = endDate)
-```
+```  
 ]
 ---
 
@@ -148,11 +148,11 @@ readNWISuv(siteNumbers = gages[i:j],
 devtools::install_github("NCAR/rwrfhydro")
 ```
 
-||   
-----|----  
-Website|https://ral.ucar.edu/projects/wrf_hydro/rwrfhydro  
-Document|https://rdrr.io/github/mccreigh/rwrfhydro/  
-GitHub | https://github.com/NCAR/rwrfhydro   
+|   |
+|----|----|  
+|Website|https://ral.ucar.edu/projects/wrf_hydro/rwrfhydro | 
+|Document|https://rdrr.io/github/mccreigh/rwrfhydro/ |  
+|GitHub | https://github.com/NCAR/rwrfhydro | 
 
 
 ---
