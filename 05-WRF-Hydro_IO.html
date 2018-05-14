@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hands-on Traning</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Chuliang Xiao" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Hands-on Traning
+## 05-WRF-Hydro I/O
+### Chuliang Xiao
+### 5/15/18
+
+---
+
+
+
+
+# Outline
+ 
+#### Review of WRF-Hydro Workflow 
+
+#### WRF-Hydro Input and Output
+- Hydrofabic  
+
+- Meteorological Forcing  
+
+- USGS Observation  
+
+- WRF-Hydro Output
+
+---
+
+# WRF-Hydro Workflow  
+&lt;div align="center"&gt;
+&lt;img src="WRF-Hydro-Workflow.png" width=800 height=480&gt;
+&lt;/div&gt;
+(Courtesy **WRF-Hdyro Training Material**) 
+
+---
+
+# Meteorological Forcing 1: Datasets  
+
+Abbr.| Name | Link  
+----|----|----  
+NLDAS|North American Land Data Assimilation System| [NASA](https://ldas.gsfc.nasa.gov/nldas/)   
+HRRR|High-Resolution Rapid Refresh|[NOAA](https://rapidrefresh.noaa.gov/hrrr/)
+CaPA|Canadian Precipitation Analysis System|[ECCC](http://collaboration.cmc.ec.gc.ca/cmc/cmoi/product_guide/submenus/capa_e.html)  
+MRMS|Multi Radar Multi Sensor System |[NOAA](http://mrms.ncep.noaa.gov/data/)   
+RAP|Rapid Refresh|[NOAA](https://rapidrefresh.noaa.gov/hrrr/)   
+GFS|Global Forecast System|[UCAR](https://rda.ucar.edu/datasets/ds084.6/#!description)   
+
+---
+
+# Meteorological Forcing 1: Regridding
+.pull-left[
+* Earth System Modeling Framework (ESMF) `ESMF_regrid`   
+    + https://www.ncl.ucar.edu/Applications/ESMF.shtml  
+  
+* NCL Script 
+    + Main script 
+        - `NLDAS2WRFHYDRO_ESMF.lisi.ncl`  
+    + Bash script 
+        - `NLDAS.ESMF.sh`  
+    + Job script 
+        - `submit_ncl.sh`  
+]    
+.pull-right[
+* Example from `NLDAS2WRFHYDRO_ESMF.lisi.ncl`    
+
+```ymal
+        opt                = True
+        opt@ForceOverwrite = True
+        opt@SrcGridLat  = datfile-&gt;lat_110
+        opt@SrcGridLon  = datfile-&gt;lon_110
+        opt@DstGridLat  = dlat2d
+        opt@DstGridLon  = dlon2d
+        opt@SrcRegional = True
+        opt@DstRegional = True
+
+*       opt@SkipSrcGrid = True
+*       opt@SkipDstGrid = True
+*       opt@SkipWgtGen  = True
+
+        opt@CopyVarAtts    = True
+        opt@CopyVarCoords  = False
+
+        var2d   = var
+*       v4      = ESMF_regrid( var2d , opt)
+```
+]  
+
+---
+
+# USGS Observation: Website    
+* USGS Current Water Data for Michigan
+    - https://waterdata.usgs.gov/mi/nwis/rt
+    
+* Statewide Streamflow Current Conditions Table  
+    - https://waterdata.usgs.gov/mi/nwis/current/?type=flow
+    
+* USGS 04119000 GRAND RIVER AT GRAND RAPIDS, MI  
+    - https://waterdata.usgs.gov/mi/nwis/uv/?site_no=04119000&amp;PARAmeter_cd=00065,00060
+
+---
+
+# USGS Observation: R Package  
+.pull-left[
+* R `dataRetrieval`  
+    + GitHub  
+    https://github.com/USGS-R/dataRetrieval  
+    
+    + Presentation  
+    http://usgs-r.github.io/dataRetrieval  
+    
+* Python `usgs-api` 
+]
+
+.pull-left[
+Example on Cheyenne
+`~cxiao/WORK/Champlain/Stream/download.US.R`
+
+```r
+readNWISuv(siteNumbers = gages[i:j],
+           parameterCd = parameterCd,
+           startDate = startDate,
+           endDate = endDate)
+```
+]
+---
+
+# WRF-Hydro Output
+* Output netcdf file control in `hydro.namelist`  
+
+```yaml
+-rw-r--r-- 1 cxiao ncar   39231 Apr 30 15:08 201101010000.CHANOBS_DOMAIN1
+-rw-r--r-- 1 cxiao ncar  144684 Apr 30 15:08 201101010000.CHRTOUT_DOMAIN1
+-rw-r--r-- 1 cxiao ncar 2509327 Apr 30 15:08 201101010000.LDASOUT_DOMAIN1
+
+-rw-r--r-- 1 cxiao ncar 33727720 May  7 15:22 frxst_pts_out.New.txt
+
+```
+---
+
+# R Package for WRF-Hydro  
+```r
+devtools::install_github("NCAR/rwrfhydro")
+```
+
+||   
+----|----  
+Website|https://ral.ucar.edu/projects/wrf_hydro/rwrfhydro  
+Document|https://rdrr.io/github/mccreigh/rwrfhydro/  
+GitHub | https://github.com/NCAR/rwrfhydro   
+
+
+---
+
+# WRF-Hydro Output: 
+* R Package  
+```r
+library(rwrfhydro)
+```
+
+* Read `frxst_pts_out.txt`
+```r
+ReadFrxstPts(`frxst_pts_out.txt`)
+```
+
+* Read `CHANOBS`  
+```r
+ReadChrtout("Run/", gageList=gages,
+            rtlinkFile='Run/DOMAIN/Route_Link.nc',
+            idvar='feature_id')
+```
+---
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
