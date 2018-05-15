@@ -6,6 +6,7 @@ date: "5/15/18"
 output:
   xaringan::moon_reader:
     lib_dir: libs
+    css: xaringan-themer.css
     nature:
       highlightStyle: github
       highlightLines: true
@@ -13,8 +14,8 @@ output:
       ratio: "16:9"
 ---
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
 ```
 
 #Using git to connect GitHub  
@@ -99,7 +100,8 @@ ALL FORCING DATA IS MAPPED TO SAME GRID (based on WRF ‘geogrid’)
 SPECIFIED PRECIPITATION MAY HAVE HIGHER TIME RESOLUTION (e.g. 5min)  
 ---
 
-# Meteorological Forcing 1: Regridding
+# Meteorological Forcing 1: Regridding  
+
 .pull-left[
 * Earth System Modeling Framework (ESMF) `ESMF_regrid`   
     + https://www.ncl.ucar.edu/Applications/ESMF.shtml  
@@ -134,12 +136,13 @@ SPECIFIED PRECIPITATION MAY HAVE HIGHER TIME RESOLUTION (e.g. 5min)
 
         var2d   = var
 *       v4      = ESMF_regrid( var2d , opt)
-```
+```  
 ]  
 
 ---
 
-# USGS Observation: Website    
+# USGS Observation: Website  
+
 * USGS Current Water Data for Michigan
     - https://waterdata.usgs.gov/mi/nwis/rt
     
