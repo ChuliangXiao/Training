@@ -26,6 +26,7 @@ git clone https://github.com/ChuliangXiao/Training.git
 
 * To update 
 ```git
+cd Training
 git pull
 ```
 ---
@@ -224,4 +225,22 @@ ReadChrtout("Run/", gageList=gages,
             idvar='feature_id')
 ```
 ---
+
+# WRF-Hydro Output  
+```
+/glade2/scratch2/cxiao/Champlain/Stream
+```
+
+* Download USGS  
+`download.US.R`  
+
+* Read in `CHANOBS`  
+`read.CHRTOUT.US.R`  
+
+* Caclulate Mean Area Precipitation  
+`Calc_Mean_Areal.R`  
+`MAP.R`  
+
+* Plot Hydrograph  
+`Hydrograph.Comp.US.ggplot2.png.R`  
 
