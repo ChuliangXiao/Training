@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hands-on Traning</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Chuliang Xiao" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Hands-on Traning
+## 06-WRF-Hydro Post-processing
+### Chuliang Xiao
+### 5/25/18
+
+---
+
+
+
+
+#Using git to connect GitHub  
+* To clone  
+```git
+git clone https://github.com/ChuliangXiao/Training.git
+```
+
+* To update 
+```git
+cd Training
+git pull
+```
+---
+
+# Outline
+ 
+#### Review of WRF-Hydro Workflow 
+
+#### WRF-Hydro Input and Output
+* WRF-Hydro Output  
+    + ASCII: `frxst_pts_out.txt`   
+    + NetCDF: `201101010000.CHANOBS_DOMAIN1`   
+
+* Comparison with USGS  
+
+---
+
+# Offline WRF-Hydro Workflow    
+&lt;div align="center"&gt;
+&lt;img src="WRF-Hydro-Workflow.png" width=800 height=480&gt;
+&lt;/div&gt;
+(Courtesy **WRF-Hdyro Training Material**) 
+
+---
+
+# WRF-Hydro Workflow  
+&lt;div align="center"&gt;
+&lt;img src="WRF-Hydro-Workflow-Executable.png" width=800 height=480&gt;
+&lt;/div&gt;
+(Courtesy **WRF-Hdyro Training Material**) 
+
+---
+
+
+
+# WRF-Hydro Output  
+```
+/glade2/scratch2/cxiao/Champlain/Stream
+```
+
+* Download USGS  
+`download.US.R`  
+
+* Read in `CHANOBS`  
+`read.CHRTOUT.US.R`  
+
+* Caclulate Mean Area Precipitation  
+`Calc_Mean_Areal.R`  
+`MAP.R`  
+
+* Plot Hydrograph  
+`Hydrograph.Comp.US.ggplot2.png.R`
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
