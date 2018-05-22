@@ -69,18 +69,22 @@ git pull
 /glade2/scratch2/cxiao/Champlain/Stream
 ```
 
-* Download USGS  
+* Download USGS discharge     
 `download.US.R`  
 
-* Read in `CHANOBS`  
+* Read in `YYYYMMMDDDHH.CHANOBS.DOMAIN1`  
 `read.CHRTOUT.US.R`  
 
 * Caclulate Mean Area Precipitation  
-`Calc_Mean_Areal.R`  
-`MAP.R`  
+`MAP.R` with function from `Calc_Mean_Areal.R`  
 
 * Plot Hydrograph  
 `Hydrograph.Comp.US.ggplot2.png.R`  
+---
+
+# Plot Hydrograph 
+
+
 ---
 
 # Iterative run  
