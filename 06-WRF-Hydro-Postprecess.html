@@ -42,7 +42,9 @@ git pull
     + ASCII: `frxst_pts_out.txt`   
     + NetCDF: `201101010000.CHANOBS_DOMAIN1`   
 
-* Comparison with USGS  
+* Comparison with USGS 
+
+* Mean-area Precipitation  
 
 ---
 
@@ -80,7 +82,28 @@ git pull
 `MAP.R`  
 
 * Plot Hydrograph  
-`Hydrograph.Comp.US.ggplot2.png.R`
+`Hydrograph.Comp.US.ggplot2.png.R`  
+---
+
+# Iterative run  
+.pull-left[
+* Currently, WRF-Hydro is restated manually. 
+    + Submit a job with maximum time  
+    + Ouput restart files every 15 day  
+    + Restart WRF-Hydro every 2-3 years  
+        - Find the most recent restart point  
+        - Change the start point `namelist.hrlads` and `hydro.namelist` 
+        - Submit a new job  
+]
+
+.pull-right[
+* Automatically WRF-Hydro restart run  
+    + A normal inital run  
+    + Automatical restart    
+        - No model crash 
+        - One year restart interval  
+        - Restart at the beginning of the year  
+]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
