@@ -17,45 +17,59 @@ library(dataRetrieval)
 
 ### CTL run without hydrofabric denoted as "Old Model + NLDAS2"  
 ```{r}
-streamflow  <- ReadFrxstPts('frxst_pts_out.CTL.txt')
+ctlSF         <- ReadFrxstPts('frxst_pts_out.CTL.txt')
 
-gages2	<- distinct(streamflow, st_id, st_lon, st_lat)
-near	<- FindUsgsStns(stnLon = gages2$st_lon, stnLat = gages2$st_lat, within = .005)
-streamflow$site_no	<- rep(near$site_no, nrow(streamflow)/nrow(near))
+gages2        <- distinct(ctlSF, st_id, st_lon, st_lat)
+near          <- FindUsgsStns(stnLon = gages2$st_lon, 
+                              stnLat = gages2$st_lat, 
+                              within = .005)
+ctlSF$site_no	<- rep(near$site_no, nrow(ctlSF)/nrow(near))
 	
-md0DF           <- streamflow
-md0DF['type']   <- "Old Model + NLDAS2"
+md0DF         <- ctlSF
+md0DF['type'] <- "Old Model + NLDAS2"
 str(md0DF)
 ```
 
+
 ### Read streamflow values for from "New Model + NLDAS2"  
 ```{r}
-md1DF		<- get(load("CHRTOUT.US.2011.Rdata"))
+md1DF		      <- get(load("CHRTOUT.US.2011.Rdata"))
 md1DF['type']	<- "New Model + NLDAS2"
 ```
 
 ### Read streamflow from "New Model + Spin-up + NLDAS2"  
 ```{r}
-md2DF		<- get(load("CHRTOUT.US.2011.spin.Rdata"))
+md2DF		      <- get(load("CHRTOUT.US.2011.spin.Rdata"))
 md2DF['type']	<- "New Model + Spin-up + NLDAS2"
 ```
 
 ### Read streamflow from "New Model + Spin-up + CaPA"  
 ```{r}
-md3DF		<- get(load("CHRTOUT.CaPA.2011.Rdata"))
+md3DF		      <- get(load("CHRTOUT.CaPA.2011.Rdata"))
 md3DF['type']	<- "New Model + Spin-up + CaPA"
 ```
 
 ### USGS observation  
 ```{r}
-obsDF   <- get(load('USGS_Champlain_US_2011.All.Rdata'))
-obsDF <- renameNWISColumns(obsDF)
-colnames(obsDF)[3]      <- "POSIXct"
-obsDF['q_cms']     <- obsDF$Flow_Inst/35
-obsDF['type']		<- "Observation"
-str(obsDF)
+obsDF               <- get(load('USGS_Champlain_US_2011.All.Rdata'))
+obsDF               <- renameNWISColumns(obsDF)
+colnames(obsDF)[3]  <- "POSIXct"
+obsDF['q_cms']      <- obsDF$Flow_Inst/35.315
+obsDF['type']       <- "Observation"
+head(obsDF)
 ```
 
+##### Tidyverse
+```{r}
+load('USGS_Champlain_US_2011.All.Rdata', temp <- new.env())
+obsTB <- temp$obsDF %>% 
+  as_tibble() %>% 
+  renameNWISColumns() %>% 
+  rename(POSIXct = dateTime) %>% 
+  mutate(q_cms = Flow_Inst/35.315,
+         type  = "Observation")
+head(obsTB)
+```
 
 ### Station name  
 ```{r}
@@ -84,9 +98,9 @@ merDFt$type <- factor(merDFt$type, level = c("New Model + Spin-up + CaPA",
                                              "Observation"))	
 ```
 
+
 ## Plot hydrograph  
 ```{r fig.width = 10}
-gName	<- "04193500"
 gages <- sort(unique(trimws(md1DFt$site_no)))
 i     <- 1
 #for (i in 1 : length(gages)) {
@@ -98,7 +112,8 @@ i     <- 1
 	md2DF0		<- subset(md2DFt, trimws(site_no) == gName)
 	obsDF0		<- subset(obsDFt, trimws(site_no) == gName)
 	merDF0		<- subset(merDFt, trimws(site_no) == gName)
-	obsAv		<- mean(obsDF0$q_cms)
+	obsAv		  <- mean(obsDF0$q_cms)
+	
   if (gName %in% obsDF0$site_no && obsAv > 0.1) {
     plt     <- ggplot(merDF0, aes(POSIXct, q_cms, color = type)) +
       geom_line() +

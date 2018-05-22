@@ -9,14 +9,16 @@ library(dataRetrieval)
 ### CTL run without hydrofabric denoted as "Old Model + NLDAS2"
 
 ``` r
-streamflow  <- ReadFrxstPts('frxst_pts_out.CTL.txt')
+ctlSF         <- ReadFrxstPts('frxst_pts_out.CTL.txt')
 
-gages2  <- distinct(streamflow, st_id, st_lon, st_lat)
-near    <- FindUsgsStns(stnLon = gages2$st_lon, stnLat = gages2$st_lat, within = .005)
-streamflow$site_no  <- rep(near$site_no, nrow(streamflow)/nrow(near))
+gages2        <- distinct(ctlSF, st_id, st_lon, st_lat)
+near          <- FindUsgsStns(stnLon = gages2$st_lon, 
+                              stnLat = gages2$st_lat, 
+                              within = .005)
+ctlSF$site_no   <- rep(near$site_no, nrow(ctlSF)/nrow(near))
     
-md0DF           <- streamflow
-md0DF['type']   <- "Old Model + NLDAS2"
+md0DF         <- ctlSF
+md0DF['type'] <- "Old Model + NLDAS2"
 str(md0DF)
 ```
 
@@ -37,72 +39,78 @@ str(md0DF)
 ### Read streamflow values for from "New Model + NLDAS2"
 
 ``` r
-md1DF       <- get(load("CHRTOUT.US.2011.Rdata"))
+md1DF             <- get(load("CHRTOUT.US.2011.Rdata"))
 md1DF['type']   <- "New Model + NLDAS2"
 ```
 
 ### Read streamflow from "New Model + Spin-up + NLDAS2"
 
 ``` r
-md2DF       <- get(load("CHRTOUT.US.2011.spin.Rdata"))
+md2DF             <- get(load("CHRTOUT.US.2011.spin.Rdata"))
 md2DF['type']   <- "New Model + Spin-up + NLDAS2"
 ```
 
 ### Read streamflow from "New Model + Spin-up + CaPA"
 
 ``` r
-md3DF       <- get(load("CHRTOUT.CaPA.2011.Rdata"))
+md3DF             <- get(load("CHRTOUT.CaPA.2011.Rdata"))
 md3DF['type']   <- "New Model + Spin-up + CaPA"
 ```
 
 ### USGS observation
 
 ``` r
-obsDF   <- get(load('USGS_Champlain_US_2011.All.Rdata'))
-obsDF <- renameNWISColumns(obsDF)
-colnames(obsDF)[3]      <- "POSIXct"
-obsDF['q_cms']     <- obsDF$Flow_Inst/35
+obsDF               <- get(load('USGS_Champlain_US_2011.All.Rdata'))
+obsDF               <- renameNWISColumns(obsDF)
+colnames(obsDF)[3]  <- "POSIXct"
+obsDF['q_cms']      <- obsDF$Flow_Inst/35.315
 obsDF['type']       <- "Observation"
-str(obsDF)
+head(obsDF)
 ```
 
-    ## 'data.frame':    1139610 obs. of  8 variables:
-    ##  $ agency_cd   : chr  "USGS" "USGS" "USGS" "USGS" ...
-    ##  $ site_no     : chr  "04271500" "04271500" "04271500" "04271500" ...
-    ##  $ POSIXct     : POSIXct, format: "2011-03-25 05:00:00" "2011-03-25 05:15:00" ...
-    ##  $ Flow_Inst   : num  726 726 731 726 715 710 705 705 705 705 ...
-    ##  $ Flow_Inst_cd: chr  "A" "A" "A" "A" ...
-    ##  $ tz_cd       : chr  "UTC" "UTC" "UTC" "UTC" ...
-    ##  $ q_cms       : num  20.7 20.7 20.9 20.7 20.4 ...
-    ##  $ type        : chr  "Observation" "Observation" "Observation" "Observation" ...
-    ##  - attr(*, "url")= chr "https://nwis.waterservices.usgs.gov/nwis/iv/?site=04271500,04271815,04273500,04273700,04273800,04275000,04275500,04276500,04276"| __truncated__
-    ##  - attr(*, "siteInfo")='data.frame': 9 obs. of  13 variables:
-    ##   ..$ station_nm          : chr  "GREAT CHAZY RIVER AT PERRY MILLS NY" "LITTLE CHAZY RIVER NEAR CHAZY NY" "SARANAC RIVER AT PLATTSBURGH NY" "SALMON RIVER AT SOUTH PLATTSBURGH NY" ...
-    ##   ..$ site_no             : chr  "04271500" "04271815" "04273500" "04273700" ...
-    ##   ..$ agency_cd           : chr  "USGS" "USGS" "USGS" "USGS" ...
-    ##   ..$ timeZoneOffset      : chr  "-05:00" "-05:00" "-05:00" "-05:00" ...
-    ##   ..$ timeZoneAbbreviation: chr  "EST" "EST" "EST" "EST" ...
-    ##   ..$ dec_lat_va          : num  45 44.9 44.7 44.6 44.6 ...
-    ##   ..$ dec_lon_va          : num  -73.5 -73.4 -73.5 -73.5 -73.5 ...
-    ##   ..$ srs                 : chr  "EPSG:4326" "EPSG:4326" "EPSG:4326" "EPSG:4326" ...
-    ##   ..$ siteTypeCd          : chr  "ST" "ST" "ST" "ST" ...
-    ##   ..$ hucCd               : chr  "04150408" "04150408" "04150406" "04150408" ...
-    ##   ..$ stateCd             : chr  "36" "36" "36" "36" ...
-    ##   ..$ countyCd            : chr  "36019" "36019" "36019" "36019" ...
-    ##   ..$ network             : chr  "NWIS" "NWIS" "NWIS" "NWIS" ...
-    ##  - attr(*, "variableInfo")='data.frame': 1 obs. of  7 variables:
-    ##   ..$ variableCode       : chr "00060"
-    ##   ..$ variableName       : chr "Streamflow, ft&#179;/s"
-    ##   ..$ variableDescription: chr "Discharge, cubic feet per second"
-    ##   ..$ valueType          : chr "Derived Value"
-    ##   ..$ unit               : chr "ft3/s"
-    ##   ..$ options            : chr ""
-    ##   ..$ noDataValue        : logi NA
-    ##  - attr(*, "disclaimer")= chr "Provisional data are subject to revision. Go to http://waterdata.usgs.gov/nwis/help/?provisional for more information."
-    ##  - attr(*, "statisticInfo")='data.frame':    1 obs. of  2 variables:
-    ##   ..$ statisticCd  : chr "00000"
-    ##   ..$ statisticName: chr ""
-    ##  - attr(*, "queryTime")= POSIXct, format: "2018-01-31 16:16:57"
+    ##   agency_cd  site_no             POSIXct Flow_Inst Flow_Inst_cd tz_cd
+    ## 1      USGS 04271500 2011-03-25 05:00:00       726            A   UTC
+    ## 2      USGS 04271500 2011-03-25 05:15:00       726            A   UTC
+    ## 3      USGS 04271500 2011-03-25 05:30:00       731            A   UTC
+    ## 4      USGS 04271500 2011-03-25 05:45:00       726            A   UTC
+    ## 5      USGS 04271500 2011-03-25 06:00:00       715            A   UTC
+    ## 6      USGS 04271500 2011-03-25 06:15:00       710            A   UTC
+    ##      q_cms        type
+    ## 1 20.55784 Observation
+    ## 2 20.55784 Observation
+    ## 3 20.69942 Observation
+    ## 4 20.55784 Observation
+    ## 5 20.24635 Observation
+    ## 6 20.10477 Observation
+
+##### Tidyverse
+
+``` r
+load('USGS_Champlain_US_2011.All.Rdata', temp <- new.env())
+obsTB <- temp$obsDF %>% 
+  as_tibble() %>% 
+  renameNWISColumns() %>% 
+  rename(POSIXct = dateTime) %>% 
+  mutate(q_cms = Flow_Inst/35.315,
+         type  = "Observation")
+```
+
+    ## Warning: package 'bindrcpp' was built under R version 3.3.3
+
+``` r
+head(obsTB)
+```
+
+    ## # A tibble: 6 x 8
+    ##   agency_cd site_no POSIXct             Flow_Inst Flow_Inst_cd tz_cd q_cms
+    ##   <chr>     <chr>   <dttm>                  <dbl> <chr>        <chr> <dbl>
+    ## 1 USGS      042715~ 2011-03-25 05:00:00       726 A            UTC    20.6
+    ## 2 USGS      042715~ 2011-03-25 05:15:00       726 A            UTC    20.6
+    ## 3 USGS      042715~ 2011-03-25 05:30:00       731 A            UTC    20.7
+    ## 4 USGS      042715~ 2011-03-25 05:45:00       726 A            UTC    20.6
+    ## 5 USGS      042715~ 2011-03-25 06:00:00       715 A            UTC    20.2
+    ## 6 USGS      042715~ 2011-03-25 06:15:00       710 A            UTC    20.1
+    ## # ... with 1 more variable: type <chr>
 
 ### Station name
 
@@ -118,11 +126,6 @@ stdate  <- as.POSIXct("2011-01-01 00:00:00")
 enddate <- as.POSIXct("2011-12-31 00:00:00")
 
 md0DFt  <- filter(md0DF, POSIXct >= stdate & POSIXct <= enddate)
-```
-
-    ## Warning: package 'bindrcpp' was built under R version 3.3.3
-
-``` r
 md1DFt  <- filter(md1DF, POSIXct >= stdate & POSIXct <= enddate)
 md2DFt  <- filter(md2DF, POSIXct >= stdate & POSIXct <= enddate)
 obsDFt  <- filter(obsDF, POSIXct >= stdate & POSIXct <= enddate)
@@ -142,7 +145,6 @@ Plot hydrograph
 ---------------
 
 ``` r
-gName   <- "04193500"
 gages <- sort(unique(trimws(md1DFt$site_no)))
 i     <- 1
 #for (i in 1 : length(gages)) {
@@ -159,7 +161,8 @@ i     <- 1
     md2DF0      <- subset(md2DFt, trimws(site_no) == gName)
     obsDF0      <- subset(obsDFt, trimws(site_no) == gName)
     merDF0      <- subset(merDFt, trimws(site_no) == gName)
-    obsAv       <- mean(obsDF0$q_cms)
+    obsAv         <- mean(obsDF0$q_cms)
+    
   if (gName %in% obsDF0$site_no && obsAv > 0.1) {
     plt     <- ggplot(merDF0, aes(POSIXct, q_cms, color = type)) +
       geom_line() +
@@ -174,7 +177,7 @@ i     <- 1
    }
 ```
 
-![](Hydrograph.Comp_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](Hydrograph.Comp_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 ``` r
 #}
