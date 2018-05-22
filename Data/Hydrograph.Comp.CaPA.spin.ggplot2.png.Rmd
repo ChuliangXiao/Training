@@ -1,5 +1,7 @@
 ---
-output: html_document
+output:
+  md_document:
+    variant: markdown_github
 ---
   
 ```{r setup, include = FALSE}
@@ -13,7 +15,7 @@ library(rwrfhydro)
 library(dataRetrieval)
 ```
 
-# CTL run without hydrofabric
+### CTL run without hydrofabric denoted as "Old Model + NLDAS2"  
 ```{r}
 streamflow  <- ReadFrxstPts('frxst_pts_out.CTL.txt')
 
@@ -26,25 +28,25 @@ md0DF['type']   <- "Old Model + NLDAS2"
 str(md0DF)
 ```
 
-# read streamflow values for the gage locations
+### Read streamflow values for from "New Model + NLDAS2"  
 ```{r}
 md1DF		<- get(load("CHRTOUT.US.2011.Rdata"))
 md1DF['type']	<- "New Model + NLDAS2"
 ```
 
-# read streamflow values for the gage locations
+### Read streamflow from "New Model + Spin-up + NLDAS2"  
 ```{r}
 md2DF		<- get(load("CHRTOUT.US.2011.spin.Rdata"))
 md2DF['type']	<- "New Model + Spin-up + NLDAS2"
 ```
 
-# read streamflow values for the gage locations
+### Read streamflow from "New Model + Spin-up + CaPA"  
 ```{r}
 md3DF		<- get(load("CHRTOUT.CaPA.2011.Rdata"))
 md3DF['type']	<- "New Model + Spin-up + CaPA"
 ```
 
-# USGS Obs
+### USGS observation  
 ```{r}
 obsDF   <- get(load('USGS_Champlain_US_2011.All.Rdata'))
 obsDF <- renameNWISColumns(obsDF)
@@ -55,13 +57,13 @@ str(obsDF)
 ```
 
 
-# Station Name
+### Station name  
 ```{r}
 siteINFO    <- get(load("USGS_Champlain_siteINFO.Rdata"))
 station_nm	<- siteINFO$station_nm
 ```
 
-# subset time period
+### Subset and combine  
 ```{r}
 stdate  <- as.POSIXct("2011-01-01 00:00:00")
 enddate <- as.POSIXct("2011-12-31 00:00:00")
@@ -82,7 +84,7 @@ merDFt$type <- factor(merDFt$type, level = c("New Model + Spin-up + CaPA",
                                              "Observation"))	
 ```
 
-## Plot Hydrograph
+## Plot hydrograph  
 ```{r fig.width = 10}
 gName	<- "04193500"
 gages <- sort(unique(trimws(md1DFt$site_no)))
